@@ -1,0 +1,29 @@
+---
+- name: Pull SQL Docker image
+  docker_image:
+    name: "{{ sql_container_image }}"
+    source: pull
+
+- name: Create SQL container
+  docker_container:
+    name: "{{ sql_container_name }}"
+    image: "{{ sql_container_image }}"
+    command: "{{ sql_container_command }}"
+    ports:
+      - "{{ sql_container_post }}:{{ sql_container_post }}"
+    env:
+      MARIADB_USER: "{{ sql_default_username }}"
+      MARIADB_DATABASE: "{{ sql_default_database }}"
+      MARIADB_PASSWORD: "{{ sql_default_password }}"
+      MARIADB_ROOT_PASSWORD: "{{ sql_root_password }}"
+    volumes:
+      - sql_data:/var/lib/mysql
+    networks:
+      - name: "{{ playbook_network }}"
+    state: present
+
+- name: Mark as completed
+  set_fact:
+    sql_ready: true
+  tags:
+    - always

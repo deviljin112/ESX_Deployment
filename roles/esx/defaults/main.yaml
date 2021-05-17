@@ -1,0 +1,5 @@
+---
+esx_ready: false
+esx_container_image: esx
+esx_container_command: "bash /fivem/server-data/reborn.sh"
+esx_container_port: 30120

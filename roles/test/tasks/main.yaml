@@ -1,0 +1,9 @@
+---
+- import_tasks: "{{ role_path }}/tasks/test.yaml"
+  tags:
+    - always
+
+- name: Fail if containers are missing
+  fail:
+    msg: "One or more containers were not created, please try again!"
+  when: completed == false

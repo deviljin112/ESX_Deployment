@@ -1,0 +1,15 @@
+---
+sql_container_name: mysql
+sql_default_username: reborn
+sql_default_password: Password@123
+sql_default_database: esx-reborn
+
+esx_container_name: esx
+esx_steam_web_api_key: ""
+esx_rcon_password: ""
+esx_hostname: "ESX Reborn Test Server"
+esx_license_key: ""
+
+playbook_network: RebornNet
+
+ansible_python_interpreter: /usr/bin/pyhon3

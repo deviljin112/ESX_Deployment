@@ -1,0 +1,6 @@
+---
+sql_ready: false
+sql_container_name: mysql
+sql_container_image: mariadb
+sql_root_password: ESXReb0rn!
+sql_container_port: 3306

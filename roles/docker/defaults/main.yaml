@@ -1,0 +1,12 @@
+---
+docker_setup_requirements:
+  [
+    "apt-transport-https",
+    "ca-certificates",
+    "curl",
+    "gnupg",
+    "lsb-release",
+    "python3-pip",
+    "python3-setuptools",
+  ]
+docker_ready: false

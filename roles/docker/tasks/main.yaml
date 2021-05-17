@@ -1,0 +1,4 @@
+- import_tasks: "{{ role_path }}/tasks/setup.yaml"
+  # when: run_setup|bool
+  tags:
+    - setup

@@ -1,0 +1,35 @@
+---
+- name: Check if esx container is running
+  docker_container_info:
+    name: "{{ esx_container_name }}"
+  register: esx_result
+
+- name: Check if sql container is running
+  docker_container_info:
+    name: "{{ sql_container_name }}"
+  register: sql_result
+
+- name: SQL Containers exist?
+  debug:
+    msg: "SQL container {{ 'exists' if sql_result.exists else 'missing' }}."
+
+- name: SQL Container running?
+  debug:
+    msg: "ESX container state: {{ sql_result['State']['Status'] }}"
+  when: sql_result.exists
+
+- name: ESX Containers exist?
+  debug:
+    msg: "ESX container {{ 'exists' if esx_result.exists else 'missing' }}."
+
+- name: ESX Container running?
+  debug:
+    msg: "ESX container state: {{ esx_result['State']['Status'] }}"
+  when: esx_result.exists
+
+- name: Set container facts
+  set_fact:
+    completed: true
+  when:
+    - esx_result['State']['Status'] == "running"
+    - sql_result['State']['Status'] == "running"

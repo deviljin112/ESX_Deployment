@@ -1,0 +1,34 @@
+---
+- name: Create ESX Docker Iimage
+  docker_image:
+    name: "{{ esx_container_image }}"
+    path: "{{ role_path }}/container/Dockerfile"
+
+- name: Create ESX container
+  docker_container:
+    name: "{{ esx_container_name }}"
+    image: "{{ esx_container_image }}"
+    command: "{{ esx_container_command }}"
+    detach: yes
+    ports:
+      - "{{ esx_container_port }}:{{ esx_container_port }}"
+    env:
+      ESX_LICENSE: "{{ esx_license_key }}"
+      ESX_HOSTNAME: "{{ esx_hostname }}"
+      ESX_RCONPASS: "{{ esx_rcon_password }}"
+      ESX_STEAMKEY: "{{ esx_steam_web_api_key }}"
+      SQL_USERNAME: "{{ sql_default_username }}"
+      SQL_PASSWORD: "{{ sql_default_password }}"
+      SQL_DATABASE: "{{ sql_default_database }}"
+      SQL_HOSTNAME: "{{ sql_container_name }}"
+    volumes:
+      - esx_data:/fivem/server-data
+    networks:
+      - name: "{{ playbook_network }}"
+    state: present
+
+- name: Mark as completed
+  set_fact:
+    esx_ready: true
+  tags:
+    - always
