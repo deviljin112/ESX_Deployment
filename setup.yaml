@@ -2,12 +2,12 @@
 - name: Main wrapper for deploying ESX into Docker
   hosts: localhost
   connection: local
-  become: true
 
   vars_files:
     - vars/default.yaml
 
   roles:
+    - docker
     - sql
     - esx
     - test

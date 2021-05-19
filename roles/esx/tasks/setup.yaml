@@ -1,8 +1,12 @@
 ---
-- name: Create ESX Docker Iimage
+- name: Create ESX Docker Image
   docker_image:
     name: "{{ esx_container_image }}"
-    path: "{{ role_path }}/container/Dockerfile"
+    build:
+      pull: yes
+      path: "{{ role_path }}/container"
+    source: build
+    state: present
 
 - name: Create ESX container
   docker_container:
@@ -23,9 +27,10 @@
       SQL_HOSTNAME: "{{ sql_container_name }}"
     volumes:
       - esx_data:/fivem/server-data
+    networks_cli_compatible: yes
     networks:
       - name: "{{ playbook_network }}"
-    state: present
+    state: started
 
 - name: Mark as completed
   set_fact:

@@ -8,9 +8,8 @@
   docker_container:
     name: "{{ sql_container_name }}"
     image: "{{ sql_container_image }}"
-    command: "{{ sql_container_command }}"
     ports:
-      - "{{ sql_container_post }}:{{ sql_container_post }}"
+      - "{{ sql_container_port }}:{{ sql_container_port }}"
     env:
       MARIADB_USER: "{{ sql_default_username }}"
       MARIADB_DATABASE: "{{ sql_default_database }}"
@@ -18,9 +17,10 @@
       MARIADB_ROOT_PASSWORD: "{{ sql_root_password }}"
     volumes:
       - sql_data:/var/lib/mysql
+    networks_cli_compatible: yes
     networks:
       - name: "{{ playbook_network }}"
-    state: present
+    state: started
 
 - name: Mark as completed
   set_fact:
